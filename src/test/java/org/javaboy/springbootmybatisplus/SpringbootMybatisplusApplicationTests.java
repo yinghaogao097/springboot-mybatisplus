@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 
 @SpringBootTest
 class SpringbootMybatisplusApplicationTests {
@@ -29,6 +30,14 @@ class SpringbootMybatisplusApplicationTests {
                         .build();
         int insert = userMapper.insert(user);
         System.out.println(insert);
+    }
+
+    @Test
+    public void testDeleteById() {
+//        int i = userMapper.deleteById(18);
+//        System.out.println(i);
+        int i = userMapper.deleteBatchIds(Arrays.asList(16, 17));
+        System.out.println(i);
     }
 
 
