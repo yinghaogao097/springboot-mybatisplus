@@ -16,13 +16,16 @@ import java.util.Map;
 class SpringbootMybatisplusApplicationTests {
     @Resource
     private UserMapper userMapper;
+
     @Test
-    public void testOr(){
+    public void testOr() {
         // select * from tb_user where user_name = ? or age < ? and name in (?,?)
         QueryWrapper<User> query = Wrappers.query();
         query
                 .eq("user_name", "赵敏")
-                .or().lt("age", 25);
+                .or().lt("age", 25)
+                // 需要哪个字段可以只查询id
+                .select("id");
         userMapper.selectList(query).forEach(System.out::println);
     }
 
