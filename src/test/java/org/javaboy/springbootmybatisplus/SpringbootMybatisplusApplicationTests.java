@@ -16,6 +16,16 @@ import java.util.Map;
 class SpringbootMybatisplusApplicationTests {
     @Resource
     private UserMapper userMapper;
+    @Test
+    public void testOr(){
+        // select * from tb_user where user_name = ? or age < ? and name in (?,?)
+        QueryWrapper<User> query = Wrappers.query();
+        query
+                .eq("user_name", "赵敏")
+                .or().lt("age", 25);
+        userMapper.selectList(query).forEach(System.out::println);
+    }
+
 
     /**
      * 要求：查询用户中姓名包含"伤"，密码为"123456",且年龄为19或者25或者29，查询结果按照年龄降序排序；
