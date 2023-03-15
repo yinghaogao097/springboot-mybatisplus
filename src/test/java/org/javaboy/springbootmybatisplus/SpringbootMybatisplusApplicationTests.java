@@ -19,6 +19,16 @@ class SpringbootMybatisplusApplicationTests {
     private UserMapper userMapper;
 
     @Test
+    public void test1() {
+        Page<User> page=new Page<>(2,3);
+        userMapper.findGtIdByPage(page, 3L);
+        System.out.println(page.getRecords());
+        System.out.println(page.getPages());
+        System.out.println(page.getTotal());
+
+    }
+
+    @Test
     public void testLambda() {
         // 创建分页对象
         Page<User> page = new Page<>(1, 3);
