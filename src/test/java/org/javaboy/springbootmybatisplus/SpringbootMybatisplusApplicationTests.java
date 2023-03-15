@@ -20,9 +20,10 @@ class SpringbootMybatisplusApplicationTests {
 
     @Test
     public void test1() {
-        Page<User> page=new Page<>(2,3);
+        Page<User> page = new Page<>(2, 3);
         userMapper.findGtIdByPage(page, 3L);
         System.out.println(page.getRecords());
+
         System.out.println(page.getPages());
         System.out.println(page.getTotal());
 
@@ -89,8 +90,7 @@ class SpringbootMybatisplusApplicationTests {
 //        pageReq.getRecords().forEach(System.out::println);
 
         // 构建查询条件
-        QueryWrapper<User> query = Wrappers.query();
-        query
+        QueryWrapper<User> query = Wrappers.query(new User())
                 .like("user_name", "伤")
                 .eq("password", "123456")
                 .in("age", 19, 25, 29)
