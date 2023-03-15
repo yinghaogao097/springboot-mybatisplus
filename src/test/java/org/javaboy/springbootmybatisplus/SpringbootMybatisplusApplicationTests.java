@@ -1,5 +1,6 @@
 package org.javaboy.springbootmybatisplus;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -16,6 +17,29 @@ import java.util.Map;
 class SpringbootMybatisplusApplicationTests {
     @Resource
     private UserMapper userMapper;
+
+    @Test
+    public void testLambda() {
+        // 创建分页对象
+        Page<User> page = new Page<>(1, 3);
+
+        // 创建LambdaQueryWrapper对象
+        LambdaQueryWrapper<User> lambdaQuery = Wrappers.lambdaQuery(User.class)
+                .like(User::getUserName, "伤")
+                .eq(User::getPassword, "123456")
+                .in(User::getAge, 19, 25, 29)
+                .orderByDesc(User::getAge);
+
+        // 执行查询
+        userMapper.selectPage(page, lambdaQuery);
+
+        System.out.println("总页数：" + page.getPages());
+        System.out.println("总记录数" + page.getTotal());
+
+        // 当前页数据
+        page.getRecords().forEach(System.out::println);
+    }
+
 
     @Test
     public void testOr() {
