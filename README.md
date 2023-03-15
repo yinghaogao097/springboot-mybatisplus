@@ -1,2 +1,2 @@
 # springboot-mybatisplus
-学习Mybatis-Plus
+Mybatis-Plus真好用
