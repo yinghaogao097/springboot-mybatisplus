@@ -1,5 +1,7 @@
 package org.javaboy.springbootmybatisplus;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.javaboy.springbootmybatisplus.mapper.UserMapper;
 import org.javaboy.springbootmybatisplus.pojo.User;
@@ -14,8 +16,44 @@ import java.util.Map;
 class SpringbootMybatisplusApplicationTests {
     @Resource
     private UserMapper userMapper;
+
+    /**
+     * 要求：查询用户中姓名包含"伤"，密码为"123456",且年龄为19或者25或者29，查询结果按照年龄降序排序；
+     */
     @Test
-    public void testSelectPage(){
+    public void testSelectPageQuery() {
+//        // 构建查询条件
+//        QueryWrapper<User> query = Wrappers.query();
+//        query
+//                .like("user_name", "伤")
+//                .eq("password", "123456")
+//                .in("age", 19, 25, 29)
+//                .orderByDesc("age");
+//        // 构建分页请求条件
+//        Page<User> pageReq = new Page<>(1, 5);
+//
+//        // 执行分页请求 结果会回填到pageReq queryWrapper为null则查询所有数据
+//        userMapper.selectPage(pageReq, query);
+//
+//        System.out.println("总页数：" + pageReq.getPages());
+//        System.out.println("总记录数" + pageReq.getTotal());
+//
+//        // 当前页数据
+//        pageReq.getRecords().forEach(System.out::println);
+
+        // 构建查询条件
+        QueryWrapper<User> query = Wrappers.query();
+        query
+                .like("user_name", "伤")
+                .eq("password", "123456")
+                .in("age", 19, 25, 29)
+                .orderByDesc("age");
+        userMapper.selectList(query).forEach(System.out::println);
+
+    }
+
+    @Test
+    public void testSelectPage() {
         // 当前页码
         int page = 2;
         // 每页数量
@@ -27,8 +65,8 @@ class SpringbootMybatisplusApplicationTests {
         // 执行分页请求 结果会回填到pageReq queryWrapper为null则查询所有数据
         userMapper.selectPage(pageReq, null);
 
-        System.out.println("总页数："+pageReq.getPages());
-        System.out.println("总记录数"+pageReq.getTotal());
+        System.out.println("总页数：" + pageReq.getPages());
+        System.out.println("总记录数" + pageReq.getTotal());
 
         // 当前页数据
         pageReq.getRecords().forEach(System.out::println);
